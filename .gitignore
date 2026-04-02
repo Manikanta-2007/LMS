@@ -1,0 +1,6 @@
+node_modules/
+.env
+.DS_Store
+dist/
+client/dist/
+c:\Users\bollu\.antigravityignore: The system cannot find the file specified. (os error 2)
