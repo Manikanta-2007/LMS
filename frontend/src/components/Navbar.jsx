@@ -79,19 +79,19 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-primary px-2 pt-2 pb-3 space-y-1 sm:px-3 animate-in slide-in-from-top duration-300">
-          <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Home</Link>
-          <Link to="/catalog" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Catalog</Link>
-          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">About</Link>
+          <Link to="/" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Home</Link>
+          <Link to="/catalog" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Catalog</Link>
+          <Link to="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">About</Link>
           {user ? (
             <>
               {isAdmin ? (
-                <Link to="/admin" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Dashboard</Link>
+                <Link to="/admin" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Dashboard</Link>
               ) : (
-                <Link to="/student-portal" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Student Portal</Link>
+                <Link to="/student-portal" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Student Portal</Link>
               )}
-              <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Profile</Link>
+              <Link to="/profile" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Profile</Link>
               <button 
-                onClick={handleLogout}
+                onClick={() => { setIsOpen(false); handleLogout(); }}
                 className="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-red-300 hover:bg-red-900/30"
               >
                 Logout
@@ -99,8 +99,8 @@ const Navbar = () => {
             </>
           ) : (
             <div className="pt-4 space-y-1">
-              <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Login</Link>
-              <Link to="/register" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Register</Link>
+              <Link to="/login" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Login</Link>
+              <Link to="/register" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Register</Link>
             </div>
           )}
         </div>

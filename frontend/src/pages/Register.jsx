@@ -76,7 +76,7 @@ const Register = () => {
         </div>
 
         {/* Right: Form Side */}
-        <div className="flex-grow p-8 md:p-12">
+        <div className="flex-grow p-6 md:p-12">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 px-1">Full Name</label>
