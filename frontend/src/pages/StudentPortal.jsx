@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
+import pqPdf from '../assets/priority-queues.pdf';
+import depqPdf from '../assets/double-ended-priority-queues.pdf';
+import impDepqPdf from '../assets/implementation-depq.pdf';
 import { 
   BookOpen, 
   Download, 
@@ -63,6 +66,37 @@ const StudentPortal = () => {
         <div className="mt-6 md:mt-0 bg-white/10 p-4 rounded-xl border border-white/20 text-center min-w-[200px]">
           <p className="text-sm font-medium uppercase tracking-widest text-blue-200">Available Materials</p>
           <p className="text-3xl font-bold">{resources.length}</p>
+        </div>
+      </div>
+
+      {/* Featured Quick Resources */}
+      <div className="mb-10">
+        <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center">
+          <FileText className="h-6 w-6 mr-2 text-primary" />
+          Featured Notes
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { title: 'Priority Queues', file: pqPdf },
+            { title: 'Double Ended Priority Queues', file: depqPdf },
+            { title: 'Implementation of DEPQ', file: impDepqPdf },
+          ].map((item, idx) => (
+            <a 
+              key={idx} 
+              href={item.file} 
+              target="_blank" 
+              rel="noreferrer"
+              className="bg-blue-50 border border-blue-100 p-4 rounded-xl flex items-center justify-between hover:bg-blue-100 hover:border-blue-200 transition-colors group"
+            >
+              <div className="flex items-center">
+                <div className="bg-white p-2 rounded-lg text-primary shadow-sm mr-3">
+                  <FileText className="h-5 w-5" />
+                </div>
+                <span className="font-bold text-sm text-slate-800 group-hover:text-primary transition-colors">{item.title}</span>
+              </div>
+              <Download className="h-4 w-4 text-slate-400 group-hover:text-primary" />
+            </a>
+          ))}
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Search, BookOpen, GraduationCap, Download, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import heroImg from '../assets/hero.png';
 
 const Home = () => {
   const [search, setSearch] = useState('');
@@ -46,8 +47,8 @@ const Home = () => {
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[60%] rounded-full bg-white blur-3xl"></div>
         </div>
         
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center">
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center justify-between">
+          <div className="text-center md:text-left md:w-1/2">
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -60,7 +61,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-6 max-w-2xl mx-auto text-xl text-blue-100"
+              className="mt-6 max-w-2xl mx-auto md:mx-0 text-xl text-blue-100"
             >
               Search and access thousands of educational materials, textbooks, and research papers carefully curated for your learning journey.
             </motion.p>
@@ -69,7 +70,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-10 max-w-xl mx-auto"
+              className="mt-10 max-w-xl mx-auto md:mx-0"
             >
               <form onSubmit={handleSearch} className="flex items-center bg-white rounded-full p-1 shadow-2xl">
                 <div className="flex-grow flex items-center pl-4">
@@ -89,13 +90,24 @@ const Home = () => {
                   <span>Search</span>
                 </button>
               </form>
-              <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm text-blue-100">
+              <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2 text-sm text-blue-100">
                 <span>Popular:</span>
                 <Link to="/catalog?category=Engineering" className="hover:underline">Engineering</Link>
                 <Link to="/catalog?category=Science" className="hover:underline">Science</Link>
                 <Link to="/catalog?category=Mathematics" className="hover:underline">Mathematics</Link>
               </div>
             </motion.div>
+          </div>
+          
+          <div className="hidden md:block md:w-1/2 mt-10 md:mt-0 pl-10">
+            <motion.img 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              src={heroImg} 
+              alt="EduResource Library" 
+              className="w-full max-w-lg mx-auto drop-shadow-2xl transform hover:scale-105 transition-transform duration-500" 
+            />
           </div>
         </div>
       </section>
