@@ -79,6 +79,30 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('token');
   };
 
+  const forgotPassword = async (email) => {
+    try {
+      const res = await axios.post(`${API_URL}/auth/forgotpassword`, { email });
+      return { success: true, message: res.data.message };
+    } catch (err) {
+      return {
+        success: false,
+        message: err.response?.data?.error || 'Email not registered'
+      };
+    }
+  };
+
+  const resetPassword = async (email, newPassword) => {
+    try {
+      const res = await axios.put(`${API_URL}/auth/resetpassword`, { email, newPassword });
+      return { success: true, message: res.data.message };
+    } catch (err) {
+      return {
+        success: false,
+        message: err.response?.data?.error || 'Password reset failed'
+      };
+    }
+  };
+
   const value = {
     user,
     token,
@@ -86,6 +110,8 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    forgotPassword,
+    resetPassword,
     isAdmin: user?.role === 'admin'
   };
 

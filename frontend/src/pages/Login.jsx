@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
-import { LogIn, Mail, Lock, ArrowRight, BookOpen } from 'lucide-react';
+import { LogIn, Mail, Lock, ArrowRight, BookOpen, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -69,13 +70,20 @@ const Login = () => {
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
-                  className="block w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+                  className="block w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-primary transition-colors"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
               </div>
             </div>
 
@@ -84,7 +92,7 @@ const Login = () => {
                 <input type="checkbox" className="h-4 w-4 text-primary border-slate-300 rounded focus:ring-primary" id="remember" />
                 <label htmlFor="remember" className="ml-2 text-slate-500 cursor-pointer hover:text-slate-700">Remember me</label>
               </div>
-              <Link to="#" className="text-primary hover:underline">Forgot password?</Link>
+              <Link to="/forgot-password" className="text-primary hover:underline">Forgot password?</Link>
             </div>
 
             <button

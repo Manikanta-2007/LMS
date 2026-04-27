@@ -1,10 +1,12 @@
 import { useAuth } from '../context/AuthContext';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { User, Mail, Shield, Calendar, BookOpen, Download, Settings, LogOut } from 'lucide-react';
+import { User, Mail, Shield, Calendar, BookOpen, Download, Settings, LogOut, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const { user, logout, isAdmin } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   if (!user) return null;
@@ -101,12 +103,22 @@ const Profile = () => {
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Personal Details</h4>
                     <div className="space-y-4">
                        <div>
-                          <label className="block text-xs font-bold mb-1 text-slate-500 pl-1">Display Name</label>
-                          <input type="text" value={user.name} readOnly className="w-full bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm font-medium focus:ring-0 outline-none text-slate-400" />
+                          <label className="block text-xs font-bold mb-1 text-slate-500 pl-1">Full Name</label>
+                          <div className="relative group">
+                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300 transition-colors">
+                                <User className="h-4 w-4" />
+                             </div>
+                             <input type="text" value={user?.name || ''} readOnly placeholder="Full Name" className="w-full pl-11 bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm font-medium focus:ring-0 outline-none text-slate-600" />
+                          </div>
                        </div>
                        <div>
-                          <label className="block text-xs font-bold mb-1 text-slate-500 pl-1">Email</label>
-                          <input type="text" value={user.email} readOnly className="w-full bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm font-medium focus:ring-0 outline-none text-slate-400" />
+                          <label className="block text-xs font-bold mb-1 text-slate-500 pl-1">Email Address</label>
+                          <div className="relative group">
+                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300 transition-colors">
+                                <Mail className="h-4 w-4" />
+                             </div>
+                             <input type="text" value={user?.email || ''} readOnly placeholder="Email Address" className="w-full pl-11 bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm font-medium focus:ring-0 outline-none text-slate-600" />
+                          </div>
                        </div>
                     </div>
                  </div>
@@ -114,10 +126,26 @@ const Profile = () => {
                  <div className="space-y-4">
                     <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Security</h4>
                     <div className="space-y-4">
-                       <button className="w-full text-left bg-slate-100 p-4 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-200 transition-all flex justify-between items-center group">
-                          <span>Change Password</span>
-                          <Settings className="h-4 w-4 text-slate-400 group-hover:rotate-90 transition-transform" />
-                       </button>
+                       <div>
+                          <label className="block text-xs font-bold mb-1 text-slate-500 pl-1">Change Password</label>
+                          <div className="relative group">
+                             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-300 transition-colors">
+                                <Lock className="h-4 w-4" />
+                             </div>
+                             <input 
+                               type={showPassword ? "text" : "password"} 
+                               placeholder="Enter new password" 
+                               className="w-full pl-11 pr-12 bg-slate-50 border border-slate-100 p-3 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary outline-none text-slate-600 transition-all" 
+                             />
+                             <button
+                               type="button"
+                               onClick={() => setShowPassword(!showPassword)}
+                               className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors"
+                             >
+                               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                             </button>
+                          </div>
+                       </div>
                        <button className="w-full text-left bg-slate-100 p-4 rounded-xl text-sm font-bold text-slate-700 hover:bg-slate-200 transition-all flex justify-between items-center group">
                           <span>Privacy Settings</span>
                           <Settings className="h-4 w-4 text-slate-400 group-hover:rotate-90 transition-transform" />
