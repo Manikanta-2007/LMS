@@ -26,7 +26,7 @@ const ViewFeedback = () => {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/feedback');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback');
       setFeedback(res.data.data);
     } catch (err) {
       toast.error('Failed to load feedback');

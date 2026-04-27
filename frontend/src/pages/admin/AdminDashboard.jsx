@@ -31,9 +31,9 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const [resUsers, resResources, resFeedback] = await Promise.all([
-        axios.get(import.meta.env.VITE_API_URL + '/api/users'),
-        axios.get(import.meta.env.VITE_API_URL + '/api/resources'),
-        axios.get(import.meta.env.VITE_API_URL + '/api/feedback')
+        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/users'),
+        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources'),
+        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback')
       ]);
 
       const totalDownloads = resResources.data.data.reduce((acc, curr) => acc + (curr.downloadsCount || 0), 0);

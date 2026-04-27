@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Configure axios defaults
-  const API_URL = import.meta.env.VITE_API_URL + '/api';
+  const API_URL = (import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api';
   
   useEffect(() => {
     if (token) {

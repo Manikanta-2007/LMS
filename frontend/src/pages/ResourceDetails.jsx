@@ -36,7 +36,7 @@ const ResourceDetails = () => {
 
   const fetchResource = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/resources/${id}`);
+      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`);
       setResource(res.data.data);
     } catch (err) {
       setError('Resource not found');
@@ -47,7 +47,7 @@ const ResourceDetails = () => {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/feedback/resource/${id}`);
+      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/feedback/resource/${id}`);
       setFeedback(res.data.data);
     } catch (err) {
       console.error('Error fetching feedback:', err);
@@ -56,7 +56,7 @@ const ResourceDetails = () => {
 
   const handleDownload = async () => {
     try {
-      window.open(`${import.meta.env.VITE_API_URL}/api/resources/${id}/download`, '_blank');
+      window.open(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}/download`, '_blank');
       toast.success('Download started!');
       // Update local state for immediate feedback
       setResource(prev => ({ ...prev, downloadsCount: prev.downloadsCount + 1 }));
@@ -73,7 +73,7 @@ const ResourceDetails = () => {
     }
     setSubmitting(true);
     try {
-      await axios.post(import.meta.env.VITE_API_URL + '/api/feedback', {
+      await axios.post((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback', {
         resourceId: id,
         rating,
         message: comment

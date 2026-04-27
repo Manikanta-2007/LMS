@@ -24,7 +24,7 @@ const StudentPortal = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/resources');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources');
       // For student portal, we might just want to show recent resources or all of them.
       setResources(res.data.data);
     } catch (err) {
@@ -37,7 +37,7 @@ const StudentPortal = () => {
 
   const handleDownload = async (id, title) => {
     try {
-      window.open(`${import.meta.env.VITE_API_URL}/api/resources/${id}/download`, '_blank');
+      window.open(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}/download`, '_blank');
       toast.success(`Downloading ${title}...`);
       // Update local state for immediate feedback
       setResources(prev => 

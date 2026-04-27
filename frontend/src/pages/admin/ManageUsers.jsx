@@ -29,7 +29,7 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/users');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/users');
       setUsers(res.data.data);
     } catch (err) {
       toast.error('Failed to load users');
@@ -41,7 +41,7 @@ const ManageUsers = () => {
   const handleStatusUpdate = async () => {
     const newStatus = selectedUser.status === 'active' ? 'blocked' : 'active';
     try {
-      await axios.patch(`${import.meta.env.VITE_API_URL}/api/users/${selectedUser._id}/status`, { status: newStatus });
+      await axios.patch(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/users/${selectedUser._id}/status`, { status: newStatus });
       toast.success(`User successfully ${newStatus === 'active' ? 'unblocked' : 'blocked'}`);
       setUsers(users.map(u => u._id === selectedUser._id ? { ...u, status: newStatus } : u));
       setShowStatusModal(false);
@@ -53,7 +53,7 @@ const ManageUsers = () => {
   const deleteUser = async (id) => {
     if (window.confirm('This action will permanently delete the user account. Proceed?')) {
       try {
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`);
+        await axios.delete(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/users/${id}`);
         toast.success('User deleted successfully');
         setUsers(users.filter(u => u._id !== id));
       } catch (err) {

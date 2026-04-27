@@ -29,7 +29,7 @@ const ManageResources = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get(import.meta.env.VITE_API_URL + '/api/resources');
+      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources');
       setResources(res.data.data);
     } catch (err) {
       toast.error('Failed to load resources');
@@ -40,7 +40,7 @@ const ManageResources = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/api/resources/${deleteId}`);
+      await axios.delete(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${deleteId}`);
       toast.success('Resource deleted successfully');
       setResources(resources.filter(r => r._id !== deleteId));
       setShowDeleteModal(false);

@@ -43,7 +43,7 @@ const AddResource = () => {
 
   const fetchResource = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/resources/${id}`);
+      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`);
       const data = res.data.data;
       setFormData({
         title: data.title,
@@ -88,10 +88,10 @@ const AddResource = () => {
 
     try {
       if (isEdit) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/api/resources/${id}`, data);
+        await axios.put(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`, data);
         toast.success('Resource updated successfully');
       } else {
-        await axios.post(import.meta.env.VITE_API_URL + '/api/resources', data);
+        await axios.post((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources', data);
         toast.success('Resource uploaded successfully');
       }
       navigate('/admin/resources');
