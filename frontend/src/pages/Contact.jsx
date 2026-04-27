@@ -77,24 +77,24 @@ const Contact = () => {
                     <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
                     <div className="space-y-8">
                        <div className="flex items-start space-x-4">
-                          <Mail className="h-5 w-5 text-primary mt-1" />
-                          <div>
-                             <p className="text-xs uppercase font-bold text-slate-500 tracking-widest mb-1">Email</p>
-                             <p className="text-slate-200">contact@eduresource.edu</p>
-                          </div>
-                       </div>
-                       <div className="flex items-start space-x-4">
                           <Phone className="h-5 w-5 text-primary mt-1" />
                           <div>
                              <p className="text-xs uppercase font-bold text-slate-500 tracking-widest mb-1">Phone</p>
-                             <p className="text-slate-200">+1 (555) 123-4567</p>
+                             <p className="text-slate-200">+91 987654321</p>
+                          </div>
+                       </div>
+                       <div className="flex items-start space-x-4">
+                          <Mail className="h-5 w-5 text-primary mt-1" />
+                          <div>
+                             <p className="text-xs uppercase font-bold text-slate-500 tracking-widest mb-1">Email</p>
+                             <p className="text-slate-200"><a href="mailto:bollumanikana16@gmail.com" className="hover:text-white transition-colors">bollumanikana16@gmail.com</a></p>
                           </div>
                        </div>
                        <div className="flex items-start space-x-4">
                           <MapPin className="h-5 w-5 text-primary mt-1" />
                           <div>
                              <p className="text-xs uppercase font-bold text-slate-500 tracking-widest mb-1">Location</p>
-                             <p className="text-slate-200 whitespace-pre-line">123 Academic Way, Science City, SC 90210</p>
+                             <p className="text-slate-200 whitespace-pre-line">KL University</p>
                           </div>
                        </div>
                     </div>

@@ -15,9 +15,9 @@ const Profile = () => {
   };
 
   const userStats = [
-    { label: 'Saved Resources', value: '12', icon: BookOpen },
-    { label: 'Total Downloads', value: '45', icon: Download },
-    { label: 'Reviews Posted', value: '8', icon: Settings },
+    { label: 'Saved Resources', value: '0', icon: BookOpen },
+    { label: 'Total Downloads', value: '0', icon: Download },
+    { label: 'Reviews Posted', value: '0', icon: Settings },
   ];
 
   return (
@@ -31,7 +31,7 @@ const Profile = () => {
               className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 text-center relative overflow-hidden"
            >
               <div className="absolute top-0 left-0 w-full h-24 bg-primary px-4 py-3 flex items-center justify-between text-white">
-                 <span className="text-[10px] font-bold uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">ID: {user.id.slice(-6).toUpperCase()}</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">ID: {(user.id || user._id || '000000').slice(-6).toUpperCase()}</span>
                  {isAdmin && <Shield className="h-5 w-5 text-blue-300" />}
               </div>
               
@@ -52,7 +52,7 @@ const Profile = () => {
                  </div>
                  <div className="flex items-center space-x-3 p-3 bg-slate-50 rounded-xl">
                     <Calendar className="h-5 w-5 text-slate-400" />
-                    <span className="text-sm font-medium text-slate-600">Joined Mar 2024</span>
+                    <span className="text-sm font-medium text-slate-600">Joined {user.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'recently'}</span>
                  </div>
               </div>
 

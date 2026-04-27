@@ -121,16 +121,16 @@ const About = () => {
                <h3 className="text-2xl font-bold mb-8">Contact Info</h3>
                <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                     <Mail className="h-5 w-5 text-blue-300" />
-                     <span className="text-sm">support@edu-library.edu</span>
+                     <Phone className="h-5 w-5 text-blue-300" />
+                     <span className="text-sm">+91 987654321</span>
                   </div>
                   <div className="flex items-center space-x-4">
-                     <Phone className="h-5 w-5 text-blue-300" />
-                     <span className="text-sm">+1 (555) 123-4567</span>
+                     <Mail className="h-5 w-5 text-blue-300" />
+                     <span className="text-sm"><a href="mailto:bollumanikana16@gmail.com" className="hover:underline">bollumanikana16@gmail.com</a></span>
                   </div>
                   <div className="flex items-center space-x-4">
                      <MapPin className="h-5 w-5 text-blue-300" />
-                     <span className="text-sm">123 Academic Way, Science City, SC 90210</span>
+                     <span className="text-sm">KL University</span>
                   </div>
                </div>
             </div>
