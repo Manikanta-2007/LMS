@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -13,10 +14,12 @@ import {
   GraduationCap, 
   X,
   ChevronRight,
-  Info
+  Info,
+  Lock
 } from 'lucide-react';
 
 const Catalog = () => {
+  const { user } = useAuth();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -259,13 +262,23 @@ const Catalog = () => {
                         <Download className="h-3 w-3 mr-1" />
                         <span>{resource.downloadsCount} downloads</span>
                       </div>
-                      <Link 
-                        to={`/resource/${resource._id}`}
-                        className="flex items-center space-x-1 text-primary font-bold text-sm hover:underline"
-                      >
-                        <span>View Details</span>
-                        <ChevronRight className="h-4 w-4" />
-                      </Link>
+                      {user ? (
+                        <Link 
+                          to={`/resource/${resource._id}`}
+                          className="flex items-center space-x-1 text-primary font-bold text-sm hover:underline"
+                        >
+                          <span>View Details</span>
+                          <ChevronRight className="h-4 w-4" />
+                        </Link>
+                      ) : (
+                        <Link 
+                          to="/login"
+                          className="flex items-center space-x-1 text-slate-400 font-bold text-sm hover:text-primary transition-colors"
+                        >
+                          <Lock className="h-3 w-3" />
+                          <span>Login to Access</span>
+                        </Link>
+                      )}
                     </div>
                   </motion.div>
                 ))}

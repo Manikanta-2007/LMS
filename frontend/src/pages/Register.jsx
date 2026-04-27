@@ -10,13 +10,15 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    role: 'user',
+    secretKey: ''
   });
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
-  const { name, email, password, confirmPassword } = formData;
+  const { name, email, password, confirmPassword, role, secretKey } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,7 +32,7 @@ const Register = () => {
     }
 
     setLoading(true);
-    const result = await register({ name, email, password });
+    const result = await register({ name, email, password, role, secretKey });
     setLoading(false);
 
     if (result.success) {
@@ -146,6 +148,36 @@ const Register = () => {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 px-1">Role</label>
+                <select
+                  name="role"
+                  className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                  value={role}
+                  onChange={handleChange}
+                >
+                  <option value="user">Student</option>
+                  <option value="admin">Administrator</option>
+                </select>
+              </div>
+
+              {role === 'admin' && (
+                <div>
+                  <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 px-1">Admin Secret</label>
+                  <input
+                    type="password"
+                    name="secretKey"
+                    required
+                    className="block w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all text-sm"
+                    placeholder="Enter Secret Key"
+                    value={secretKey}
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
             </div>
 
             <div className="pt-4">

@@ -20,7 +20,11 @@ const Login = () => {
 
     if (result.success) {
       toast.success('Successfully logged in!');
-      navigate('/');
+      if (result.user?.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/student-portal');
+      }
     } else {
       toast.error(result.message);
     }

@@ -34,10 +34,15 @@ const Navbar = () => {
             <div className="ml-4 flex items-center md:ml-6 space-x-2">
               {user ? (
                 <>
-                  {isAdmin && (
+                  {isAdmin ? (
                     <Link to="/admin" className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-secondary">
                       <LayoutDashboard className="h-4 w-4" />
                       <span>Dashboard</span>
+                    </Link>
+                  ) : (
+                    <Link to="/student-portal" className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-secondary">
+                      <BookOpen className="h-4 w-4" />
+                      <span>Student Portal</span>
                     </Link>
                   )}
                   <Link to="/profile" className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium hover:bg-secondary">
@@ -79,8 +84,10 @@ const Navbar = () => {
           <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">About</Link>
           {user ? (
             <>
-              {isAdmin && (
+              {isAdmin ? (
                 <Link to="/admin" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Dashboard</Link>
+              ) : (
+                <Link to="/student-portal" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Student Portal</Link>
               )}
               <Link to="/profile" className="block px-3 py-2 rounded-md text-base font-medium hover:bg-secondary">Profile</Link>
               <button 

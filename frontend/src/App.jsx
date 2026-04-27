@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 
 // Protected User Pages
 import Profile from './pages/Profile';
+import StudentPortal from './pages/StudentPortal';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -39,14 +40,19 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/catalog" element={<Catalog />} />
-            <Route path="/resource/:id" element={<ResourceDetails />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
             
-            {/* Protected User Routes */}
+            {/* Protected Student-Only Routes */}
+            <Route element={<ProtectedRoute studentOnly={true} />}>
+              <Route path="/student-portal" element={<StudentPortal />} />
+            </Route>
+
+            {/* Protected User Routes (All authenticated users) */}
             <Route element={<ProtectedRoute />}>
               <Route path="/profile" element={<Profile />} />
+              <Route path="/resource/:id" element={<ResourceDetails />} />
             </Route>
           </Route>
 

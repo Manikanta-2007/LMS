@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export const ProtectedRoute = ({ adminOnly = false }) => {
+export const ProtectedRoute = ({ adminOnly = false, studentOnly = false }) => {
   const { user, loading, isAdmin } = useAuth();
 
   if (loading) {
@@ -18,6 +18,10 @@ export const ProtectedRoute = ({ adminOnly = false }) => {
 
   if (adminOnly && !isAdmin) {
     return <Navigate to="/" replace />;
+  }
+
+  if (studentOnly && isAdmin) {
+    return <Navigate to="/admin/dashboard" replace />;
   }
 
   return <Outlet />;
