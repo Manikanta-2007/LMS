@@ -43,7 +43,7 @@ const Catalog = () => {
   const fetchResources = async (s = search, c = category) => {
     setLoading(true);
     try {
-      let url = `http://localhost:5000/api/resources?`;
+      let url = `${import.meta.env.VITE_API_URL}/api/resources?`;
       if (s) url += `search=${s}&`;
       if (c) url += `category=${c}&`;
       if (resourceType) url += `resourceType=${resourceType}&`;

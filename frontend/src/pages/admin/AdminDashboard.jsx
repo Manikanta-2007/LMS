@@ -31,9 +31,9 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const [resUsers, resResources, resFeedback] = await Promise.all([
-        axios.get('http://localhost:5000/api/users'),
-        axios.get('http://localhost:5000/api/resources'),
-        axios.get('http://localhost:5000/api/feedback')
+        axios.get(import.meta.env.VITE_API_URL + '/api/users'),
+        axios.get(import.meta.env.VITE_API_URL + '/api/resources'),
+        axios.get(import.meta.env.VITE_API_URL + '/api/feedback')
       ]);
 
       const totalDownloads = resResources.data.data.reduce((acc, curr) => acc + (curr.downloadsCount || 0), 0);
