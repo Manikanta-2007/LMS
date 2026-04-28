@@ -13,8 +13,13 @@ import {
   FileText
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { mockDashboardStats, mockResources } from '../../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const AdminDashboard = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalResources: 0,
@@ -31,9 +36,9 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const [resUsers, resResources, resFeedback] = await Promise.all([
-        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/users'),
-        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources'),
-        axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback')
+        axios.get(`${API}/api/users`),
+        axios.get(`${API}/api/resources`),
+        axios.get(`${API}/api/feedback`)
       ]);
 
       const totalDownloads = resResources.data.data.reduce((acc, curr) => acc + (curr.downloadsCount || 0), 0);
@@ -48,6 +53,13 @@ const AdminDashboard = () => {
       setRecentResources(resResources.data.data.slice(0, 5));
     } catch (err) {
       console.error('Error fetching dashboard data:', err);
+      setStats({
+        totalUsers: mockDashboardStats.totalUsers,
+        totalResources: mockDashboardStats.totalResources,
+        totalDownloads: mockDashboardStats.totalDownloads,
+        totalFeedback: 12
+      });
+      setRecentResources(mockResources.slice(0, 5));
     } finally {
       setLoading(false);
     }
@@ -71,8 +83,8 @@ const AdminDashboard = () => {
       {/* Welcome Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-slate-800 tracking-tight">System Overview</h2>
-          <p className="text-slate-500 font-medium mt-1 uppercase text-xs tracking-widest">Real-time Library Analytics</p>
+          <h2 className="text-3xl font-bold text-slate-800 tracking-tight">Admin Dashboard</h2>
+          <p className="text-slate-500 font-medium mt-1 uppercase text-xs tracking-widest">Welcome back, {user?.name}</p>
         </div>
         <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-2xl shadow-sm border border-slate-100">
            <ShieldCheck className="h-5 w-5 text-green-500" />

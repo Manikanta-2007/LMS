@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
+
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -29,10 +31,11 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/users');
+      const res = await axios.get(`${API}/api/users`);
       setUsers(res.data.data);
     } catch (err) {
-      toast.error('Failed to load users');
+      toast.error('Failed to load users from backend.');
+      setUsers([]);
     } finally {
       setLoading(false);
     }
@@ -41,7 +44,7 @@ const ManageUsers = () => {
   const handleStatusUpdate = async () => {
     const newStatus = selectedUser.status === 'active' ? 'blocked' : 'active';
     try {
-      await axios.patch(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/users/${selectedUser._id}/status`, { status: newStatus });
+      await axios.patch(`${API}/api/users/${selectedUser._id}/status`, { status: newStatus });
       toast.success(`User successfully ${newStatus === 'active' ? 'unblocked' : 'blocked'}`);
       setUsers(users.map(u => u._id === selectedUser._id ? { ...u, status: newStatus } : u));
       setShowStatusModal(false);
@@ -53,7 +56,7 @@ const ManageUsers = () => {
   const deleteUser = async (id) => {
     if (window.confirm('This action will permanently delete the user account. Proceed?')) {
       try {
-        await axios.delete(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/users/${id}`);
+        await axios.delete(`${API}/api/users/${id}`);
         toast.success('User deleted successfully');
         setUsers(users.filter(u => u._id !== id));
       } catch (err) {

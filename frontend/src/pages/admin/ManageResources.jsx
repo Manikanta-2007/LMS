@@ -15,6 +15,9 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { mockResources } from '../../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const ManageResources = () => {
   const [resources, setResources] = useState([]);
@@ -29,10 +32,11 @@ const ManageResources = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources');
+      const res = await axios.get(`${API}/api/resources`);
       setResources(res.data.data);
     } catch (err) {
-      toast.error('Failed to load resources');
+      toast.error('Backend unreachable. Showing offline demo data.');
+      setResources(mockResources);
     } finally {
       setLoading(false);
     }
@@ -40,7 +44,7 @@ const ManageResources = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${deleteId}`);
+      await axios.delete(`${API}/api/resources/${deleteId}`);
       toast.success('Resource deleted successfully');
       setResources(resources.filter(r => r._id !== deleteId));
       setShowDeleteModal(false);

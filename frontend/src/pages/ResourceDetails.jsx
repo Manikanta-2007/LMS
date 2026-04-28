@@ -17,6 +17,9 @@ import {
   ShieldAlert
 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { mockResources, mockFeedback } from '../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const ResourceDetails = () => {
   const { id } = useParams();
@@ -36,10 +39,17 @@ const ResourceDetails = () => {
 
   const fetchResource = async () => {
     try {
-      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`);
+      const res = await axios.get(`${API}/api/resources/${id}`);
       setResource(res.data.data);
     } catch (err) {
-      setError('Resource not found');
+      console.error('API Error:', err);
+      const mockRes = mockResources.find(r => r._id === id) || mockResources[0];
+      if (mockRes) {
+        setResource(mockRes);
+        toast.info('Showing offline demo data');
+      } else {
+        setError('Resource not found');
+      }
     } finally {
       setLoading(false);
     }
@@ -47,16 +57,17 @@ const ResourceDetails = () => {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/feedback/resource/${id}`);
+      const res = await axios.get(`${API}/api/feedback/resource/${id}`);
       setFeedback(res.data.data);
     } catch (err) {
       console.error('Error fetching feedback:', err);
+      setFeedback(mockFeedback);
     }
   };
 
   const handleDownload = async () => {
     try {
-      window.open(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}/download`, '_blank');
+      window.open(`${API}/api/resources/${id}/download`, '_blank');
       toast.success('Download started!');
       // Update local state for immediate feedback
       setResource(prev => ({ ...prev, downloadsCount: prev.downloadsCount + 1 }));
@@ -73,7 +84,7 @@ const ResourceDetails = () => {
     }
     setSubmitting(true);
     try {
-      await axios.post((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback', {
+      await axios.post(`${API}/api/feedback`, {
         resourceId: id,
         rating,
         message: comment

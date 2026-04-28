@@ -17,6 +17,9 @@ import {
   Info,
   Lock
 } from 'lucide-react';
+import { mockResources } from '../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const Catalog = () => {
   const { user } = useAuth();
@@ -43,7 +46,7 @@ const Catalog = () => {
   const fetchResources = async (s = search, c = category) => {
     setLoading(true);
     try {
-      let url = `${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources?`;
+      let url = `${API}/api/resources?`;
       if (s) url += `search=${s}&`;
       if (c) url += `category=${c}&`;
       if (resourceType) url += `resourceType=${resourceType}&`;
@@ -54,7 +57,8 @@ const Catalog = () => {
       setError(null);
     } catch (err) {
       console.error('Error fetching resources:', err);
-      setError('Failed to load resources. Please try again later.');
+      setError('Backend unreachable. Showing offline demo data.');
+      setResources(mockResources);
     } finally {
       setLoading(false);
     }

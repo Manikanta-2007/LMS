@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
   const [loading, setLoading] = useState(true);
 
-  // Configure axios defaults
-  const API_URL = (import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api';
+  // Configure API Base URL
+  const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
   
   useEffect(() => {
     if (token) {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`${API_URL}/auth/me`);
+      const res = await axios.get(`${API}/api/auth/me`);
       setUser(res.data.data);
     } catch (err) {
       console.error('Error fetching user:', err);
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(`${API_URL}/auth/login`, { email, password });
+      const res = await axios.post(`${API}/api/auth/login`, { email, password });
       setToken(res.data.token);
       setUser(res.data.user);
       return { success: true, user: res.data.user };
@@ -57,9 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const res = await axios.post(`${API_URL}/auth/register`, userData);
-      // For registration, we might not always get a token back depending on backend logic
-      // But if we do, we can log them in automatically
+      const res = await axios.post(`${API}/api/auth/register`, userData);
       if (res.data.token && res.data.user) {
         setToken(res.data.token);
         setUser(res.data.user);
@@ -81,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
   const forgotPassword = async (email) => {
     try {
-      const res = await axios.post(`${API_URL}/auth/forgotpassword`, { email });
+      const res = await axios.post(`${API}/api/auth/forgotpassword`, { email });
       return { success: true, message: res.data.message };
     } catch (err) {
       return {
@@ -93,7 +91,7 @@ export const AuthProvider = ({ children }) => {
 
   const resetPassword = async (email, newPassword) => {
     try {
-      const res = await axios.put(`${API_URL}/auth/resetpassword`, { email, newPassword });
+      const res = await axios.put(`${API}/api/auth/resetpassword`, { email, newPassword });
       return { success: true, message: res.data.message };
     } catch (err) {
       return {

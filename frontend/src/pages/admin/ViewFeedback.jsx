@@ -14,6 +14,9 @@ import {
   X
 } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { mockFeedback } from '../../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const ViewFeedback = () => {
   const [feedback, setFeedback] = useState([]);
@@ -26,10 +29,11 @@ const ViewFeedback = () => {
 
   const fetchFeedback = async () => {
     try {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/feedback');
+      const res = await axios.get(`${API}/api/feedback`);
       setFeedback(res.data.data);
     } catch (err) {
-      toast.error('Failed to load feedback');
+      toast.error('Backend unreachable. Showing offline demo data.');
+      setFeedback(mockFeedback);
     } finally {
       setLoading(false);
     }

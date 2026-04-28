@@ -33,7 +33,7 @@ const Profile = () => {
               className="bg-white rounded-3xl p-8 shadow-xl border border-slate-100 text-center relative overflow-hidden"
            >
               <div className="absolute top-0 left-0 w-full h-24 bg-primary px-4 py-3 flex items-center justify-between text-white">
-                 <span className="text-[10px] font-bold uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">ID: {(user.id || user._id || '000000').slice(-6).toUpperCase()}</span>
+                 <span className="text-[10px] font-bold uppercase tracking-widest bg-white/20 px-2 py-1 rounded-md">User ID: {user._id || user.id}</span>
                  {isAdmin && <Shield className="h-5 w-5 text-blue-300" />}
               </div>
               

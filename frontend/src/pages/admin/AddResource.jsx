@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
+
 const AddResource = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ const AddResource = () => {
 
   const fetchResource = async () => {
     try {
-      const res = await axios.get(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`);
+      const res = await axios.get(`${API}/api/resources/${id}`);
       const data = res.data.data;
       setFormData({
         title: data.title,
@@ -88,10 +90,10 @@ const AddResource = () => {
 
     try {
       if (isEdit) {
-        await axios.put(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}`, data);
+        await axios.put(`${API}/api/resources/${id}`, data);
         toast.success('Resource updated successfully');
       } else {
-        await axios.post((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources', data);
+        await axios.post(`${API}/api/resources`, data);
         toast.success('Resource uploaded successfully');
       }
       navigate('/admin/resources');

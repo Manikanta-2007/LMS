@@ -6,14 +6,11 @@ import { motion } from 'framer-motion';
 import pqPdf from '../assets/priority-queues.pdf';
 import depqPdf from '../assets/double-ended-priority-queues.pdf';
 import impDepqPdf from '../assets/implementation-depq.pdf';
-import { 
-  BookOpen, 
-  Download, 
-  FileText, 
-  ChevronRight,
-  GraduationCap
-} from 'lucide-react';
+import { BookOpen, Download, FileText, ChevronRight, GraduationCap } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { mockResources } from '../utils/mockData';
+
+const API = import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com';
 
 const StudentPortal = () => {
   const { user } = useAuth();
@@ -27,12 +24,13 @@ const StudentPortal = () => {
 
   const fetchResources = async () => {
     try {
-      const res = await axios.get((import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com') + '/api/resources');
+      const res = await axios.get(`${API}/api/resources`);
       // For student portal, we might just want to show recent resources or all of them.
       setResources(res.data.data);
     } catch (err) {
       console.error('Error fetching resources:', err);
-      setError('Failed to load resources.');
+      setError('Backend unreachable. Showing offline demo data.');
+      setResources(mockResources);
     } finally {
       setLoading(false);
     }
@@ -40,7 +38,7 @@ const StudentPortal = () => {
 
   const handleDownload = async (id, title) => {
     try {
-      window.open(`${(import.meta.env.VITE_API_URL || 'https://lms-2-9jwk.onrender.com')}/api/resources/${id}/download`, '_blank');
+      window.open(`${API}/api/resources/${id}/download`, '_blank');
       toast.success(`Downloading ${title}...`);
       // Update local state for immediate feedback
       setResources(prev => 
